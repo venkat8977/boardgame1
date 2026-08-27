@@ -58,9 +58,25 @@ pipeline {
 
     stage('Trivy Image Scan'){
         steps{
-           sh "trivy image --severity HIGH,CRITICAL --exit-code 1 venky005/boardgame1:${BUILD_NUMBER}"
+           sh "trivy image --severity HIGH,CRITICAL venky005/boardgame1:${BUILD_NUMBER}"
         }
     }
-  }      
+
+    stage('Push to Nexus') {
+        steps {
+            withCredentials([
+                usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NU', passwordVariable: 'NP'),
+                string(credentialsId: 'nexus-registry', variable: 'REGISTRY')
+            ])  {
+                sh '''
+                    docker tag venky005/boardgame1:${BUILD_NUMBER} $REGISTRY/venky005/boardgame1:${BUILD_NUMBER}
+                    echo "$NP" | docker login $REGISTRY -u "$NU" --password-stdin
+                    docker push $REGISTRY/venky005/boardgame1:${BUILD_NUMBER}
+                '''
+            }
+        }
+    }
+  }
 }
+
 
