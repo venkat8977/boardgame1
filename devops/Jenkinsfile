@@ -54,5 +54,7 @@ pipeline {
         steps{
            sh 'docker build -t venky005/boardgame1:${Build_NUMBER} .'
         }
-    }    
+    }
+  }      
 }
+
