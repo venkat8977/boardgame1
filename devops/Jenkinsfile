@@ -65,7 +65,7 @@ pipeline {
     stage('Push to Nexus') {
         steps {
             withCredentials([
-                usernamePassword(credentialsId: 'nexus-creds', usernameVariable: 'NU', passwordVariable: 'NP'),
+                usernamePassword(credentialsId: 'nexus-cred', usernameVariable: 'NU', passwordVariable: 'NP'),
                 string(credentialsId: 'nexus-registry', variable: 'REGISTRY')
             ])  {
                 sh '''
