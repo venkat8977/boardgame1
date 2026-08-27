@@ -44,7 +44,7 @@ pipeline {
 
     stage('Quality Gate') {
         steps {
-            timeout(time: 50, unit: 'SECONDS') {
+            timeout(time: 3, unit: 'MINUTES') {
                 waitForQualityGate abortPipeline: true
             }
         }
@@ -52,7 +52,13 @@ pipeline {
 
     stage('Build Docker Image'){
         steps{
-           sh "docker build -f devops/Dockerfile -t venky005/boardgame1:${Build_NUMBER} ."
+           sh "docker build -f devops/Dockerfile -t venky005/boardgame1:${BUILD_NUMBER} ."
+        }
+    }
+
+    stage('Trivy Image Scan'){
+        steps{
+           sh "trivy image --severity HIGH,CRITICAL --exit-code 1 venky005/boardgame1:${BUILD_NUMBER}"
         }
     }
   }      
