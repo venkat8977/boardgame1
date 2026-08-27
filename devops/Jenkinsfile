@@ -76,7 +76,24 @@ pipeline {
             }
         }
     }
-  }
+
+    stage('Update Helm values') {
+        steps {
+            withCredentials([usernamePassword(credentialsId: 'github-creds', usernameVariable: 'GU', passwordVariable: 'GP')]) {
+                sh '''
+                    git config user.email "jenkins@ci.com"
+                    git config user.name "venkat"
+
+                    sed -i "s|tag: .*|tag: \\"${BUILD_NUMBER}\\"|" helm/boardgame/values.yaml
+
+                    git add helm/boardgame/values.yaml
+                    git commit -m "Update image tag to ${BUILD_NUMBER}"
+                    git push https://${GU}:${GP}@github.com/venkat8977/boardgame1.git main
+                '''
+            }
+        }
+    }
+  } 
 }
 
 
