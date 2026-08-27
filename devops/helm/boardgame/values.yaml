@@ -1,0 +1,12 @@
+image:
+  repository: 13.233.139.88:8083/venky005/boardgame1
+  tag: "26"
+
+replicaCount: 2
+
+service:
+  port: 80
+  targetPort: 8080
+
+ingress:
+  host: boardgame.local
