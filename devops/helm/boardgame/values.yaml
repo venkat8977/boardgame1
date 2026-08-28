@@ -1,6 +1,6 @@
 image:
   repository: 15.207.141.154:8083/venky005/boardgame1
-  tag: "26"
+  tag: "37"
 
 replicaCount: 2
 
