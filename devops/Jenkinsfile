@@ -88,7 +88,7 @@ pipeline {
 
                     git add devops/helm/boardgame/values.yaml
                     git commit -m "Update image tag to ${BUILD_NUMBER}"
-                    git push https://${GU}:${GP}@github.com/venkat8977/boardgame1.git main
+                    git push https://${GU}:${GP}@github.com/venkat8977/boardgame1.git main 
                 '''
             }
         }
