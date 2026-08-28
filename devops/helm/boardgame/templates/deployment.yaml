@@ -12,6 +12,8 @@ spec:
       labels:
         app: boardgame
     spec:
+      imagePullSecrets:
+        - name: nexus-registry-secret
       containers:
         - name: boardgame
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
